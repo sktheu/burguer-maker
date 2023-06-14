@@ -6,33 +6,40 @@ using UnityEngine.UI;
 public class TableIcon : MonoBehaviour
 {
     [Header("Configurações:")]
-    [SerializeField] private IconType iconType;
+    [SerializeField] private TableIcon.Types iconType;
     public Ingredients.Types CurrentIngredient;
 
     [Header("Sprites:")] 
     [SerializeField] private Sprite[] ingredientsSprites = new Sprite[6];
 
+    // Referências
+    private static BurguerObjective _burguerObjective;
+
     // Componentes
     private Image _image;
 
-    private enum IconType
+    public enum Types
     {
         Red,
         Green,
         Yellow
     }
 
-    private void Start()
+    private void Awake()
     {
         _image = GetComponent<Image>();
+    }
 
-        Clean();
+    private void Start()
+    {
+        _burguerObjective = GameObject.FindGameObjectWithTag("BurguerObjective").GetComponent<BurguerObjective>();
     }
 
     public void Change(Ingredients.Types ingredient)
     {
         CurrentIngredient = ingredient;
         SetImage();
+        _burguerObjective.CompareIcons(CurrentIngredient, iconType);
     }
 
     public void SetImage()
@@ -67,7 +74,7 @@ public class TableIcon : MonoBehaviour
         }
     }
 
-    private void Clean()
+    public void Clean()
     {
         CurrentIngredient = Ingredients.Types.Empty;
         _image.sprite = null;

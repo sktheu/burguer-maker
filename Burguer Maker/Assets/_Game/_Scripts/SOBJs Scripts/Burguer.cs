@@ -8,8 +8,8 @@ public class Burguer : ScriptableObject
     public string Name;
 
     [Header("Sprites:")] 
-    public Sprite[] sprites;
+    public Sprite[] sprites = new Sprite[4];
 
     [Header("Ingredientes:")]
-    public Ingredients[] ingredients = new Ingredients[3];
+    public Ingredients.Types[] ingredients = new Ingredients.Types[3];
 }
