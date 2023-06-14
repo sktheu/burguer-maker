@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class Ingredients : MonoBehaviour
 {
-    public enum Red 
+    public enum Types
     {
         Ketchup,
-        Mostard
-    }
-
-    public enum Green 
-    {
+        Mostard,
         Lettuce,
-        Onion
-    }
-
-    public enum Yellow 
-    {
+        Onion,
         Cheese,
-        Bacon
+        Bacon,
+        Empty
     }
 }

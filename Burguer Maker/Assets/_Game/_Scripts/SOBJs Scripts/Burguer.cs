@@ -11,7 +11,5 @@ public class Burguer : ScriptableObject
     public Sprite[] sprites;
 
     [Header("Ingredientes:")]
-    public Ingredients.Red RedIngredient;
-    public Ingredients.Green GreenIngredient;
-    public Ingredients.Yellow YelloIngredient;
+    public Ingredients[] ingredients = new Ingredients[3];
 }

@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Burguer 1
   m_EditorClassIdentifier: 
   Name: Burguir
-  sprites: []
-  RedIngredient: 0
-  GreenIngredient: 0
-  YelloIngredient: 0
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ingredients:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
