@@ -38,6 +38,8 @@ public class BurguerObjective : MonoBehaviour
 
     private float _currentTime;
 
+    private bool _scoredRed, _scoredGreen, _scoredYellow;
+
     private void Start()
     {
         SelectBurguer(false, true);
@@ -57,6 +59,10 @@ public class BurguerObjective : MonoBehaviour
 
     private void SelectBurguer(bool scored, bool firstTime=false)
     {
+        _scoredRed = false;
+        _scoredGreen = false;
+        _scoredYellow = false;
+
         if (!firstTime)
         {
             if (scored)
@@ -68,10 +74,11 @@ public class BurguerObjective : MonoBehaviour
             {
                 feedback.LostScore();
                 score.Change(Score.Modifier.Decreasing);
-                foreach (var button in buttons)
-                {
-                    button.Realocate();
-                }
+            }
+
+            foreach (var button in buttons)
+            {
+                button.Realocate();
             }
         }
         
@@ -99,25 +106,37 @@ public class BurguerObjective : MonoBehaviour
         {
             if (ingredient != currentBurguer.ingredients[0])
             {
-                SelectBurguer(true);
-                feedback.LostScore();
+                SelectBurguer(false);
             }
-            else
+            else if (!_scoredRed)
+            {
                 _iconScore++;
+                _scoredRed = true;
+            }
         }
         else if (iconType == TableIcon.Types.Green)
         {
             if (ingredient != currentBurguer.ingredients[1])
+            {
                 SelectBurguer(false);
-            else
+            }
+            else if (!_scoredGreen)
+            {
                 _iconScore++;
+                _scoredGreen = true;
+            }
         }
         else
         {
             if (ingredient != currentBurguer.ingredients[2])
+            {
                 SelectBurguer(false);
-            else
+            }
+            else if (!_scoredYellow)
+            {
                 _iconScore++;
+                _scoredYellow = true;
+            }
         }
     }
 
