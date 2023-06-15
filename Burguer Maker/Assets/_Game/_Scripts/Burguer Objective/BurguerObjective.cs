@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class BurguerObjective : MonoBehaviour
 {
-    
     [SerializeField] private Burguer currentBurguer;
 
     [Header("Timer:")] 
@@ -27,6 +26,9 @@ public class BurguerObjective : MonoBehaviour
 
     [Header("Feedback:")] 
     [SerializeField] private Feedback feedback;
+
+    [Header("HUD:")] 
+    [SerializeField] private Score score;
 
     [Header("Componentes:")] 
     [SerializeField] private Image[] images = new Image[4];
@@ -58,10 +60,14 @@ public class BurguerObjective : MonoBehaviour
         if (!firstTime)
         {
             if (scored)
+            {
                 feedback.GainScore();
+                score.Change(Score.Modifier.Increasing);
+            }
             else
             {
                 feedback.LostScore();
+                score.Change(Score.Modifier.Decreasing);
                 foreach (var button in buttons)
                 {
                     button.Realocate();
@@ -120,9 +126,9 @@ public class BurguerObjective : MonoBehaviour
         _currentTime -= Time.deltaTime;
         slider.value = _currentTime * slider.maxValue / slider.maxValue;
 
-        if (_currentTime >= 6f)
+        if (_currentTime >= 5f)
             fillImage.color = fillColors[0];
-        else if (_currentTime >= 4f)
+        else if (_currentTime >= 3f)
             fillImage.color = fillColors[1];
         else if (_currentTime >= 0f)
             fillImage.color = fillColors[2];
