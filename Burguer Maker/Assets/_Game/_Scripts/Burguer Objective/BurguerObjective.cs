@@ -22,6 +22,9 @@ public class BurguerObjective : MonoBehaviour
     [Header("Mesa:")]
     [SerializeField] private TableIcon[] tableIcons = new TableIcon[3];
 
+    [Header("Botões:")] 
+    [SerializeField] private ButtonPosition[] buttons = new ButtonPosition[6];
+
     [Header("Feedback:")] 
     [SerializeField] private Feedback feedback;
 
@@ -57,7 +60,13 @@ public class BurguerObjective : MonoBehaviour
             if (scored)
                 feedback.GainScore();
             else
+            {
                 feedback.LostScore();
+                foreach (var button in buttons)
+                {
+                    button.Realocate();
+                }
+            }
         }
         
         _currentTime = maxTime;

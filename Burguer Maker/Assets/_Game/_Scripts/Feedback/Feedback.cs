@@ -10,7 +10,7 @@ public class Feedback : MonoBehaviour
     [SerializeField] private Color[] colors;
 
     // Referências
-    private Animator _mainCameraAnimator;
+    private Animator _elementsAnimator;
 
     // Components
     private Image _img;
@@ -18,6 +18,7 @@ public class Feedback : MonoBehaviour
     private void Start()
     {
         _img = GetComponent<Image>();
+        _elementsAnimator = GameObject.FindGameObjectWithTag("Elements").GetComponent<Animator>();
     }
 
     public void GainScore()
@@ -31,6 +32,7 @@ public class Feedback : MonoBehaviour
     {
         _img.enabled = true;
         _img.color = colors[1];
+        _elementsAnimator.Play("Elements Shake " + Random.Range(1, 4) + " Animation");
         StartCoroutine(HideImage(hideInterval));
     }
 
