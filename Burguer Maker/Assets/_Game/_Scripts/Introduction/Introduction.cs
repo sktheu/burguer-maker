@@ -16,12 +16,12 @@ public class Introduction : MonoBehaviour
         _txtMP = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void ChangeText(string text)
+    private void ChangeText(string text)
     {
         _txtMP.text = text;
     }
 
-    public void StartElements()
+    private void StartElements()
     {
         elementsAnimator.Play("Elements Start Animation");
         Destroy(gameObject);

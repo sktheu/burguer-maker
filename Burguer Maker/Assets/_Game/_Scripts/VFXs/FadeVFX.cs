@@ -72,7 +72,6 @@ public class FadeVFX : MonoBehaviour
             else
             {
                 isFading = false;
-                Destroy(gameObject);
             }
         }
     }

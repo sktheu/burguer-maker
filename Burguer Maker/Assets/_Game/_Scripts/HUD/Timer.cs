@@ -7,6 +7,9 @@ public class Timer : MonoBehaviour
 {
     [Header("Configurações:")] 
     [SerializeField] private float startTime;
+
+    [Header("Referências:")] 
+    [SerializeField] private Animator elementsAnimator;
     
     // Componentes
     private TextMeshProUGUI _txtMP;
@@ -31,8 +34,8 @@ public class Timer : MonoBehaviour
         {
             _currentTime = 0;
             SetTimerText();
-
-            // TODO: Game Over
+            BurguerObjective.IsPlaying = false;
+            elementsAnimator.Play("Elements End Animation");
         }
     }
 

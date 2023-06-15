@@ -10,7 +10,11 @@ public class Score : MonoBehaviour
     [SerializeField] private int decrement;
     [SerializeField] private int initialValue;
 
-    private int _currentScore;
+    [Header("Referências:")] 
+    [SerializeField] private Animator elementsAnimator;
+
+    [HideInInspector] public int CurrentScore { get; private set; }
+    public static int LastScore = 0;
 
     public enum Modifier
     {
@@ -25,26 +29,27 @@ public class Score : MonoBehaviour
     {
         _txtMP = GetComponent<TextMeshProUGUI>();
 
-        _currentScore = initialValue;
-        _txtMP.text = "Pontos: " + _currentScore;
+        CurrentScore = initialValue;
+        _txtMP.text = "Pontos: " + CurrentScore;
     }
 
     public void Change(Score.Modifier modifier)
     {
         if (modifier == Modifier.Increasing)
         {
-            _currentScore += increment;
+            CurrentScore += increment;
         }
         else
         {
-            _currentScore -= decrement;
-            if (_currentScore <= 0)
+            CurrentScore -= decrement;
+            if (CurrentScore <= 0)
             {
-                _currentScore = 0;
-                //TODO: GameOVER
+                CurrentScore = 0;
+                BurguerObjective.IsPlaying = false;
+                elementsAnimator.Play("Elements End Animation");
             }
         }
 
-        _txtMP.text = "Pontos: " + _currentScore;
+        _txtMP.text = "Pontos: " + CurrentScore;
     }
 }

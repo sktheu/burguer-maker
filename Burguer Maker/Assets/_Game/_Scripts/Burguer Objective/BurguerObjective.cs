@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class BurguerObjective : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private Image fillImage;
     [SerializeField] private Color[] fillColors;
+    [SerializeField] private float[] colorLimits;
 
     [Header("Scriptable Objects:")]
     [SerializeField] private Burguer[] burguers = new Burguer[8];
@@ -40,20 +42,24 @@ public class BurguerObjective : MonoBehaviour
 
     private bool _scoredRed, _scoredGreen, _scoredYellow;
 
+    public static bool IsPlaying = false;
+
     private void Start()
     {
-        SelectBurguer(false, true);
+        StartCoroutine(SelectInitialBurguer(4f));
     }
 
     private void Update()
     {
-        slider.maxValue = maxTime;
-        Timer();
-
-        if (_iconScore >= 3)
+        if (IsPlaying)
         {
-            SelectBurguer(true);
-            // Todo: Pontuar
+            slider.maxValue = maxTime;
+            Timer();
+
+            if (_iconScore >= 3)
+            {
+                SelectBurguer(true);
+            }
         }
     }
 
@@ -145,13 +151,20 @@ public class BurguerObjective : MonoBehaviour
         _currentTime -= Time.deltaTime;
         slider.value = _currentTime * slider.maxValue / slider.maxValue;
 
-        if (_currentTime >= 5f)
+        if (_currentTime >= colorLimits[0])
             fillImage.color = fillColors[0];
-        else if (_currentTime >= 3f)
+        else if (_currentTime >= colorLimits[1])
             fillImage.color = fillColors[1];
-        else if (_currentTime >= 0f)
+        else if (_currentTime >= colorLimits[2])
             fillImage.color = fillColors[2];
         else
             SelectBurguer(false);
+    }
+
+    private IEnumerator SelectInitialBurguer(float t)
+    {
+        yield return new WaitForSeconds(t);
+        IsPlaying = true;
+        SelectBurguer(false, true);
     }
 }
