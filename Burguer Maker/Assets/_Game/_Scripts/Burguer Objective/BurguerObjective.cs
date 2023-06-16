@@ -32,6 +32,9 @@ public class BurguerObjective : MonoBehaviour
     [Header("HUD:")] 
     [SerializeField] private Score score;
 
+    [Header("Audio Manager:")]
+    [SerializeField] private AudioManager audioManager;
+
     [Header("Componentes:")] 
     [SerializeField] private Image[] images = new Image[4];
     [SerializeField] private TextMeshProUGUI txtMP;
@@ -43,6 +46,8 @@ public class BurguerObjective : MonoBehaviour
     private bool _scoredRed, _scoredGreen, _scoredYellow;
 
     public static bool IsPlaying = false;
+
+    private bool[] _decreasedLimits = new bool[2];
 
     private void Start()
     {
@@ -69,15 +74,20 @@ public class BurguerObjective : MonoBehaviour
         _scoredGreen = false;
         _scoredYellow = false;
 
+        for (int i = 0; i < _decreasedLimits.Length; i++)
+            _decreasedLimits[i] = false;
+
         if (!firstTime)
         {
             if (scored)
             {
+                audioManager.PlaySFX("gain score " + Random.Range(1, 6));
                 feedback.GainScore();
                 score.Change(Score.Modifier.Increasing);
             }
             else
             {
+                audioManager.PlaySFX("lost score " + Random.Range(1, 6));
                 feedback.LostScore();
                 score.Change(Score.Modifier.Decreasing);
             }
@@ -152,13 +162,31 @@ public class BurguerObjective : MonoBehaviour
         slider.value = _currentTime * slider.maxValue / slider.maxValue;
 
         if (_currentTime >= colorLimits[0])
+        {
             fillImage.color = fillColors[0];
+        }
         else if (_currentTime >= colorLimits[1])
+        {
             fillImage.color = fillColors[1];
+            if (!_decreasedLimits[0])
+            {
+                score.Change(Score.Modifier.Decreasing, 4);
+                _decreasedLimits[0] = true;
+            }
+        }
         else if (_currentTime >= colorLimits[2])
+        {
             fillImage.color = fillColors[2];
+            if (!_decreasedLimits[1])
+            {
+                score.Change(Score.Modifier.Decreasing, 4);
+                _decreasedLimits[1] = true;
+            }
+        }
         else
+        {
             SelectBurguer(false);
+        }
     }
 
     private IEnumerator SelectInitialBurguer(float t)

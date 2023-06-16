@@ -32,8 +32,14 @@ public class FadeVFX : MonoBehaviour
 
     private void Update()
     {
-        if (isFading) 
+        if (isFading)
+        {
             ApplyFade();
+            if (type == FadeType.FadeIn)
+                AudioListener.volume += 0.01f * Time.deltaTime;
+            else
+                AudioListener.volume -= 0.01f * Time.deltaTime;
+        }
     }
 
     public void StartFade(FadeType t)

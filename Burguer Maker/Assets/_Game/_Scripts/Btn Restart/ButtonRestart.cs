@@ -7,9 +7,11 @@ public class ButtonRestart : MonoBehaviour
 {
     [Header("Referências:")] 
     [SerializeField] private GameObject fadeIn;
+    [SerializeField] private AudioManager audioManager;
 
     public void Restart(float t)
     {
+        audioManager.PlaySFX("button 1");
         fadeIn.SetActive(true);
         Invoke("LoadLevel", t);
     }

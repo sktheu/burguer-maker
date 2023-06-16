@@ -33,7 +33,7 @@ public class Score : MonoBehaviour
         _txtMP.text = "Pontos: " + CurrentScore;
     }
 
-    public void Change(Score.Modifier modifier)
+    public void Change(Score.Modifier modifier, int divider=1)
     {
         if (modifier == Modifier.Increasing)
         {
@@ -41,7 +41,7 @@ public class Score : MonoBehaviour
         }
         else
         {
-            CurrentScore -= decrement;
+            CurrentScore -= decrement / divider;
             if (CurrentScore <= 0)
             {
                 CurrentScore = 0;

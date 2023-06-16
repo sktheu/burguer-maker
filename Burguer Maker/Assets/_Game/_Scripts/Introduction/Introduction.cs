@@ -7,9 +7,12 @@ public class Introduction : MonoBehaviour
 {
     [Header("Referências:")]
     [SerializeField] private Animator elementsAnimator;
+    [SerializeField] private AudioManager audioManager;
 
     // Components
     private TextMeshProUGUI _txtMP;
+
+    private int _curCountDown = 3;
 
     private void Start()
     {
@@ -25,5 +28,16 @@ public class Introduction : MonoBehaviour
     {
         elementsAnimator.Play("Elements Start Animation");
         Destroy(gameObject);
+    }
+
+    private void CountDownSFX()
+    {
+        audioManager.PlaySFX("countdown " + _curCountDown);
+        _curCountDown--;
+    }
+
+    private void StartMusic()
+    {
+        audioManager.PlayMusic("music");
     }
 }
